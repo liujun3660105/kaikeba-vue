@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        var person1 = {
+            age:19,
+            name:'june'
+        }
+        var person2 = {
+            age:19,
+            say:function(fm,to){
+                console.log('my name is '+ this.name+' my age is '+this.age+'来自'+fm+'去往'+to);
+            }
+        }
+        Function.prototype.Call2 = function(context,...args){
+            context.fn = this;
+            var restult = context.fn(...args);
+            return result
+        }
+
+        person2.say.call(person1,'北京','上海');
+        </script>
+
+    
+</body>
+</html>
