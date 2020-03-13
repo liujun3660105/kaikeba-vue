@@ -26,14 +26,24 @@ class VueRouter {
     }
     //监听hashchange
     bindEvents() {
-        window.addEventListener('hashchange', this.onHashChange.bind(this), false);
-        window.addEventListener('load', this.onHashChange.bind(this), false);
+        if(this.$options.mode == 'hash'){
+            window.addEventListener('hashchange', this.onHashChange.bind(this), false);
+            window.addEventListener('load', this.onHashChange.bind(this), false);
+        }else{
+            window.addEventListener('popstate', this.onHistoryChange.bind(this), false);
+            window.addEventListener('load', this.onHistoryChange.bind(this), false);
+        }
+
     }
 
     //路径变更处理
     onHashChange() {
         // #/index  => /index
         this.app.current = window.location.hash.slice(1) || '/'
+    }
+    onHistoryChange(){
+        this.app.current = window.location.pathname;
+
     }
 
     //做路由映射操作
@@ -76,7 +86,6 @@ class VueRouter {
 //插件接受Vue的构造函数
 VueRouter.install = function (_Vue) {
     Vue = _Vue;//保存Vue的构造函数，就可以方便使用了
-
     //混入：执行挂在操作
     Vue.mixin({
         //组件对router有依赖，而router对组件没有依赖，所以越早越好
